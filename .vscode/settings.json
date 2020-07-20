@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/home/user/pyvenv/web/bin/python3",
+    "cSpell.ignoreWords": [
+        "cherrypy",
+        "cherrypyserver"
+    ]
+}

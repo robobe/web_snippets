@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta chrset="UTF 8">
+
+</head>
+<body>
+<title>Event Registration</title>
+<style>
+    table,th,td{
+        border: 1px solid grey;
+        padding:5px;
+    }
+</style>
+<script src="https://code.angularjs.org/1.6.9/angular-route.js"></script>
+<script src="https://code.angularjs.org/1.6.9/angular.min.js"></script>
+
+<div ng-app="DemoApp" ng-controller="DemoController">
+    <input ng-model="search" />
+
+    <table>
+        <!-- orderBy: 'Name' -->
+        <tr ng-repeat="item in tutorial | filter:search">
+            <td>{{item.Name}}</td>
+            <td>{{item.Description}}</td>
+        </tr>
+    </table>
+
+    <h1>Select using ng-option</h1>
+    
+    <select id="s1" 
+        ng-model="s1"
+        ng-options="obj.value as obj.text for obj in array">
+    </select>
+        
+      <hr>
+      <h3>selected value = {{s1}}</h3><br/>
+
+    <h1>select using ng-repeat</h1>
+    <select id="s2" 
+        ng-model="s2">
+        <option ng-repeat="obj in array" 
+            value="{{obj.value}}">
+            {{obj.text}}
+        </option>
+    </select>
+    <hr>
+      <h3>selected value = {{s2}}</h3><br/>
+      
+      <h1>select using ng-repeat with default</h1>
+      <select id="s2default" 
+          ng-model="s2_default">
+          <option value=0>Select one</option>
+          <option ng-repeat="obj in array" 
+              value="{{obj.value}}">
+              {{obj.text}}
+          </option>
+      </select>
+      <hr>
+        <h3>selected value = {{s2_default}}</h3><br/>
+
+      <h1>select multiple using ng-option</h1>
+      <select id="s4" 
+        multiple
+        ng-model="multi1"
+        ng-options="obj.value as obj.text for obj in array">
+    </select>
+        
+      <hr>
+      <h3>selected value = {{multi1}}</h3><br/>
+
+      <h1>select multiple using ng-repeat</h1>
+      <select id="s3" 
+            multiple
+          ng-model="multi2">
+          <option ng-repeat="obj in array" 
+              value="{{obj.value}}">
+              {{obj.text}}
+          </option>
+      </select>
+      <hr>
+        <h3>selected value = {{multi2}}</h3><br/>
+    
+</div>
+
+<script type="text/javascript">
+    var app = angular.module('DemoApp',[]);
+
+    app.controller('DemoController',['$scope', function($scope) {
+        $scope.my_func = function(){
+            alert();
+        }
+        $scope.array = [
+                { "value": 1, "text": "1st" }, 
+                { "value": 2, "text": "2nd" },
+                { "value": 3, "text": "3nd" }
+                ]
+        $scope.s1 = 2;
+        $scope.s2 = "2";
+        $scope.s2_default = "0";
+        $scope.multi1 = [2, 3];
+        $scope.multi2 = ["1","2"];
+}]);
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html>
+<header>
+    <script src="https://code.angularjs.org/1.6.9/angular.min.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('DemoApp', []);
+
+        app.controller('DemoController',
+            ['$scope', '$http', function ($scope, $http) {
+                var dataObj = {
+                    my_key: "---------------"
+                }
+                $scope.my_func = function () {
+                    $http({
+                        method: 'POST',
+                        url: 'http://127.0.0.1:8080/my_action',
+                        data: dataObj,
+                        headers: { 'Content-Type': 'application/json' }
+                    }).then(function (response) {
+                        //Success
+                        //Return json object
+                        // console.log(response.data);
+                        // data = JSON.stringify(response.data)
+                        // alert(data)
+                        $scope.data = response.data;
+                    }, function (response) {
+                        //Exception
+                        console.log(response);
+                    });
+                }
+            }]);
+    </script>
+</header>
+
+<body>
+    <h1>Send/ Receive json </h1>
+    <div ng-app="DemoApp" ng-controller="DemoController">
+        <button ng-click="my_func()">send</button>
+
+        <table>
+            <tr ng-repeat="x in data">
+              <td>{{ x.id }}</td>
+              <td>{{ x.name }}</td>
+            </tr>
+          </table>
+
+    </div>
+
+
+</body>
+
+</html>

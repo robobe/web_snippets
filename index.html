@@ -1,0 +1,71 @@
+<html>
+
+<head>
+   
+</head>
+
+<body>
+	<script src="/js/jquery.min.js"></script>
+    <!-- <script src="/js/jquery-ui.min.js"></script> -->
+    <script>
+		var k,ws,reconnect;
+		var DEBUG=true;
+		$(document).ready(function (){
+            connectWS();
+        });
+
+        function connectWS(){
+			addr = 'ws://'+window.location.host+'/ws';
+			dbg('Connecting...');
+			if (window.WebSocket) {
+				ws = new WebSocket(addr);
+			}
+			else if (window.MozWebSocket) {
+				ws = MozWebSocket(addr);
+			}
+			else {
+				alert('What crap browser are you using??');
+				dbg('WebSocket Not Supported');
+				return;
+			}
+			ws.onclose=function(){
+				// Timer to reconnect.
+				dbg('Connection Closed');
+				reconnect=setTimeout(connectWS,6000);
+			}
+
+			ws.onopen=function(){
+				dbg('Connected');
+				ws.send('{"c":"update"}')
+			}
+
+			ws.onerror=function(e){
+				dbg("Socket error: " + e.data);
+			}
+
+
+			ws.onmessage = function (evt) {
+				eval('wsMsg='+evt.data);
+				if (wsMsg.hasOwnProperty('cmd_result')){
+					console.log(wsMsg.cmd_result);
+				}
+				else if (wsMsg.hasOwnProperty('status')){
+					console.log(wsMsg.status[0]);
+				}
+                else{
+					console.log(wsMsg);
+				}
+			}
+			return 0;
+		}
+
+		function dbg(m){
+			if (DEBUG){
+				console.log(m);
+			}
+		}
+
+    </script>
+</body>
+
+</html>
